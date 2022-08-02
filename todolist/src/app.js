@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    FormControl,
+    Form,
     Button
 } from 'react-bootstrap'
 
@@ -51,7 +51,7 @@ class App extends React.Component{
                 <h1>TO DO LIST</h1>
                 {this.showData()}
                 <div style={styles.input}>
-                    <FormControl placeholder="Input New Activity" ref='toDo' />
+                    <Form.Control placeholder="Input New Activity" ref='toDo' />
                     <Button variant="primary" className="ms-2" onClick={this.onAdd} >Add</Button>
                 </div>
             </div>
