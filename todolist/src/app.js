@@ -1,4 +1,5 @@
-import React from "react";
+import React from "react"
+import Axios from "axios"
 import {
     Form,
     Button
@@ -11,41 +12,71 @@ class App extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            activities: [
-                {id: 1, name: `Eat`},
-                {id: 2, name: `Sleep`},
-                {id: 3, name: 'Coding'},
-            ]
+            activities: []
         }
     }
 
-    showData = () => {
-        return (
-            this.state.activities.map(item => {
-                return <ToDoItem data={item} key={item.id} />
-            })
-        )
+    fetchData = () => {
+        Axios.get('http://localhost:2000/activities')
+        .then(res => {
+            this.setState({activities : res.data})
+        })
+        .catch(err => console.log(err))
     }
 
-    onAdd = () => {
-        //mempersiapkan data toDo baru & id nya
-        let newToDo = this.refs.toDo.value
-        let id = this.state.activities[this.state.activities.length - 1].id + 1
-        
-        // menyiapkan array untuk state yang baru
-        let tempArr = [...this.state.activities]
-        
-        //menambahkan data baru kedalam temptArr
-        tempArr.push({id, name: newToDo})
-        
-        // mengganti setState activities dengan tempArr yang berisi data aktifitas baru
-        this.setState({activities: tempArr})
+    componentDidMount() {
+        this.fetchData()
+    }
 
+    // componentDidUpdate() {
+    //     alert('component did update')
+    // }
+    
+    onAdd = () => {
+        //mempersiapkan data toDo baru
+        let newToDo = this.refs.toDo.value
+        
+        //siapkan object
+        let obj = {
+            name: newToDo,
+            isCompleted: false
+        }
+
+        //menambah data baru di db.json
+        Axios.post('http://localhost:2000/activities', obj)
+        .then(res => {
+            console.log(res.data)
+            this.fetchData()
+        })
+        
         // untuk mengosongkan kembali form control
         this.refs.toDo.value = ``
     }
-
+    
+    onDelete = (id) => {
+        Axios.delete(`http://localhost:2000/activities/${id}`)
+        .then(res => {
+            console.log(res.data)
+            this.fetchData()
+        })
+    }
+    
+    showData = () => {
+        return (
+            this.state.activities.map(item => {
+                return (
+                    <ToDoItem 
+                    data={item} 
+                    key={item.id}
+                    delete={() => this.onDelete(item.id)} 
+                    />
+                    )
+                })
+                )
+            }
+            
     render() {
+        // alert('component rendered')
         return (
             <div style={styles.container}>
                 <h1>TO DO LIST</h1>
