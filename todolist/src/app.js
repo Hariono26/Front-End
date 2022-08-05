@@ -60,6 +60,13 @@ class App extends React.Component{
             this.fetchData()
         })
     }
+
+    onComplete = (id) => {
+        Axios.patch(`http://localhost:2000/activities/${id}`, {isCompleted: true})
+        .then(res => {
+            this.fetchData()
+        })
+    }
     
     showData = () => {
         return (
@@ -68,7 +75,8 @@ class App extends React.Component{
                     <ToDoItem 
                     data={item} 
                     key={item.id}
-                    delete={() => this.onDelete(item.id)} 
+                    delete={() => this.onDelete(item.id)}
+                    complete={() => this.onComplete(item.id)} 
                     />
                     )
                 })
