@@ -1,76 +1,42 @@
 import React from "react"
-import Axios from "axios"
 import {
     Form,
     Button
 } from 'react-bootstrap'
 import { connect } from 'react-redux'
 
-//import component
 import ToDoItem from "../component/ToDoItem";
 
-//import actions
-import { getData } from "../redux/actions"
+import { getData, addData, delData, completeData } from "../redux/actions"
 
 class ToDoPages extends React.Component{
-    // constructor(props){
-    //     super(props)
-    //     this.state = {
-    //         activities: []
-    //     }
-    // } => PAKAI REDUX SUDAH TIDAK PERLU LOCALSTATE KARENA DIGANTIKAN DENGAN GLOBAL STATE
-
     fetchData = () => {
-        Axios.get('http://localhost:2000/activities')
-        .then(res => {
-            //kirim res.data ket todoreducer dengan action getData
-            this.props.getData(res.data)
-        })
-        // .catch(err => console.log(err))
+        this.props.getData()
     }
 
     componentDidMount() {
         this.fetchData()
     }
 
-    // componentDidUpdate() {
-    //     alert('component did update')
-    // }
-    
     onAdd = () => {
-        //mempersiapkan data toDo baru
         let newToDo = this.refs.toDo.value
         
-        //siapkan object
         let obj = {
             name: newToDo,
             isCompleted: false
         }
 
-        //menambah data baru di db.json
-        Axios.post('http://localhost:2000/activities', obj)
-        .then(res => {
-            console.log(res.data)
-            this.fetchData()
-        })
+        this.props.addData(obj)
         
-        // untuk mengosongkan kembali form control
         this.refs.toDo.value = ``
     }
     
     onDelete = (id) => {
-        Axios.delete(`http://localhost:2000/activities/${id}`)
-        .then(res => {
-            console.log(res.data)
-            this.fetchData()
-        })
+        this.props.delData(id)
     }
 
     onComplete = (id) => {
-        Axios.patch(`http://localhost:2000/activities/${id}`, {isCompleted: true})
-        .then(res => {
-            this.fetchData()
-        })
+       this.props.completeData(id)
     }
     
     showData = () => {
@@ -89,8 +55,6 @@ class ToDoPages extends React.Component{
             }
             
     render() {
-        // alert('component rendered')
-        console.log(this.props.listActivity)
         return (
             <div style={styles.container}>
                 <h1>TO DO LIST</h1>
@@ -120,4 +84,11 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { getData })(ToDoPages)
+const mapDispatchToProps = {
+    getData, 
+    addData, 
+    delData, 
+    completeData 
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToDoPages)
