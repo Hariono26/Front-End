@@ -1,5 +1,5 @@
 let INITIAL_STATE = {
-    count: 0
+    count: 10
 }
 
 let countReducer = (state = INITIAL_STATE, action) => {

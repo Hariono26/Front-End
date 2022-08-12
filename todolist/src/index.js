@@ -7,12 +7,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import App from "./app"
 
 //setup redux
-import { createStore, applyMiddleware } from 'redux'
+import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import allReducer from './redux/reducers'
-import ReduxThunk from 'redux-thunk'
+// import ReduxThunk from 'redux-thunk'
 
-let globalState = createStore(allReducer, applyMiddleware(ReduxThunk))
+let globalState = createStore(allReducer)
 
 // ReactDOM.render(
 //     <Provider store={globalState}>

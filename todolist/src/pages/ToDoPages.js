@@ -3,69 +3,88 @@ import {
     Form,
     Button
 } from 'react-bootstrap'
-import { connect } from 'react-redux'
 
 import ToDoItem from "../component/ToDoItem";
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect, useRef } from 'react'
+import Axios from 'axios'
 
-import { getData, addData, delData, completeData } from "../redux/actions"
-
-class ToDoPages extends React.Component{
-    fetchData = () => {
-        this.props.getData()
-    }
-
-    componentDidMount() {
-        this.fetchData()
-    }
-
-    onAdd = () => {
-        let newToDo = this.refs.toDo.value
-        
-        let obj = {
-            name: newToDo,
-            isCompleted: false
-        }
-
-        this.props.addData(obj)
-        
-        this.refs.toDo.value = ``
-    }
+const ToDoPages = () => {
+    const listActivity = useSelector((state => state.todo.activities))
+    const dispatch = useDispatch()
     
-    onDelete = (id) => {
-        this.props.delData(id)
+
+    const fetchData = () => {
+        Axios.get('http://localhost:2000/activities')
+        .then(res => {
+            dispatch({
+                type: 'GET_DATA',
+                payload: res.data
+            })
+        })
     }
 
-    onComplete = (id) => {
-       this.props.completeData(id)
-    }
     
-    showData = () => {
+    useEffect(() => {
+        Axios.get('http://localhost:2000/activities')
+        .then(res => {
+            dispatch({
+                type: 'GET_DATA',
+                payload: res.data
+            })
+        })
+    }, [dispatch])
+
+    const showData = () => {
         return (
-            this.props.listActivity.map(item => {
+            listActivity.map((item) => {
                 return (
                     <ToDoItem 
-                    data={item} 
+                    data={item}
                     key={item.id}
-                    delete={() => this.onDelete(item.id)}
-                    complete={() => this.onComplete(item.id)} 
+                    delete={() => onDelete(item.id)}
+                    complete={() => onComplete(item.id)}
                     />
                     )
                 })
                 )
             }
-            
-    render() {
-        return (
-            <div style={styles.container}>
-                <h1>TO DO LIST</h1>
-                {this.showData()}
-                <div style={styles.input}>
-                    <Form.Control placeholder="Input New Activity" ref='toDo' />
-                    <Button variant="primary" className="ms-2" onClick={this.onAdd} >Add</Button>
-                </div>
-            </div>
-        )
+    
+    const onDelete = (id) => {
+        Axios.delete(`http://localhost:2000/activities/${id}`)
+        .then(res => {
+          fetchData()
+        })
+    }   
+
+    const onComplete = (id) => {
+        Axios.patch(`http://localhost:2000/activities/${id}`, {isCompleted: true})
+        .then(res => {
+            fetchData()
+        })
     }
+
+    const newTodo = useRef()
+    const obj = {
+        name: newTodo.current,
+        isCompleted: false
+    }
+
+    const onAdd = () => {
+        console.log(obj)
+    }
+
+    return (
+        <div style={styles.container}>
+            <h1>TO DO LIST</h1>
+            {showData()}
+            <div style={styles.input}>
+                <Form.Control placeholder="Input New Activity" ref={newTodo}/>
+                <Button variant="primary" className="ms-2" onClick={onAdd} >Add</Button>
+            </div>
+        </div>
+    )
+    
 }
 
 const styles = {
@@ -78,17 +97,4 @@ const styles = {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        listActivity: state.todo.activities
-    }
-}
-
-const mapDispatchToProps = {
-    getData, 
-    addData, 
-    delData, 
-    completeData 
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ToDoPages)
+export default ToDoPages

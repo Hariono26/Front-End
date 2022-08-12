@@ -11,9 +11,9 @@
       "isCompleted": false
     },
     {
+      "id": 3,
       "name": "Coding",
-      "isCompleted": false,
-      "id": 3
+      "isCompleted": true
     }
   ]
 }
