@@ -2,50 +2,107 @@ import React from 'react'
 import {
     InputGroup,
     Form,
-    Button
+    Button,
+    Modal
 } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { login, errLoginFalse } from '../redux/actions'
 
 class LoginPage extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            visibility: false
+            visibility: false,
+            error: false,
         }
     }
-    
+
+    onLogin = () => {
+        //ambil data dari input username & password
+        let username = this.refs.username.value
+        let password = this.refs.password.value
+        // console.log(username, password)
+
+        // kalau ada input yg masih kosong maka muncul alert data tidak boleh kosong
+        if (!username || !password) {
+            return this.setState({error: true})
+        }
+
+        // cek apakah input yg dimasukkan sudah ada di data user di database
+        this.props.login(username, password)
+    }
+
     render() {
+        // jika login berhasil maka pindah kehalaman home
+        if (this.props.username) {
+            return <Navigate to="/"/>
+        }
+        
         const { visibility } = this.state
+
         return (
             <div style={styles.cont}>
                 <div style={styles.contForm}>
-                    <h1 style={{color: 'orange'}}>Hello,</h1>
-                    <h3 style={{color: 'orange'}} className='mb-4'>Welcome back !</h3>
+                    <h1 style={{ color: 'orange' }}>Hello,</h1>
+                    <h3 style={{ color: 'orange' }} className='mb-4'>Welcome back !</h3>
                     <Form.Label style={styles.fontColor}>Username</Form.Label>
-                    <InputGroup className="mb-3">
+                    <InputGroup className='mb-3'>
                         <InputGroup.Text id="basic-addon1">
-                            <i class="fa-solid fa-user"></i>
+                            <i className='fa-solid fa-user'></i>
                         </InputGroup.Text>
-                        <Form.Control placeholder="Input Your Username"/>
+                        <Form.Control ref="username" placeholder="Input Your Username" />
                     </InputGroup>
                     <Form.Label style={styles.fontColor}>Password</Form.Label>
                     <InputGroup className="mb-3">
-                        <InputGroup.Text id="basic-addon1" onClick={() => this.setState({visibility: !visibility})}>
-                            {visibility ? <i class="fa-solid fa-eye"></i> : <i class="fa-solid fa-eye-slash"></i>}
+                        <InputGroup.Text id="basic-addon1" onClick={() => this.setState({ visibility: !visibility })}>
+                            {visibility ? <i className="fa-solid fa-eye"></i> : <i className="fa-solid fa-eye-slash"></i>}
                         </InputGroup.Text>
-                        <Form.Control 
-                            type={visibility ? 'text' : 'password'} 
-                            placeholder="Input Your Password"/>
+                        <Form.Control
+                            ref='password'
+                            type={visibility ? 'text' : 'password'}
+                            placeholder="Input Your Password" />
                     </InputGroup>
                     <div style={styles.contButton}>
-                        <Button variant="warning">Login</Button>
+                        <Button variant="warning" onClick={this.onLogin}>
+                            <i style={{marginRight: '10px'}} class="fa-solid fa-door-open"></i>
+                            Login
+                        </Button>
                     </div>
                     <p style={styles.parRegislink}>Don't have an account? <Link style={styles.regisLink} to='/register'>Register</Link></p>
                 </div>
+                <Modal show={this.state.error}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>ERROR</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <p>Username and Password must be filled</p>
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button onClick={() => this.setState({error: false})} variant="warning">OK</Button>
+                    </Modal.Footer>
+                </Modal>
+                <Modal show={this.props.errorLogin}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>ERROR</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <p>This Account didn't exist.</p>
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button onClick={this.props.errLoginFalse} variant="warning">OK</Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         )
     }
 }
+
+
 
 const styles = {
     cont: {
@@ -53,6 +110,7 @@ const styles = {
         backgroundSize: 'cover',
         height: '100vh',
         display: 'flex',
+        // flexDirection:'column',
         justifyContent: 'center'
     },
     contForm: {
@@ -80,4 +138,11 @@ const styles = {
     }
 }
 
-export default LoginPage
+const mapStateToProps = (state) => {
+    return {
+        errorLogin: state.userReducer.errorLogin,
+        username: state.userReducer.username
+    }
+}
+
+export default connect(mapStateToProps, { login, errLoginFalse }) (LoginPage)

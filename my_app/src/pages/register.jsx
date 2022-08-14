@@ -10,12 +10,14 @@ class RegisPage extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            visibility: false
+            visibility: false,
+            visibility2: false
         }
     }
     
     render() {
         const { visibility } = this.state
+        const { visibility2 } = this.state
         return (
             <div style={styles.cont}>
                 <div style={styles.contForm}>
@@ -24,21 +26,21 @@ class RegisPage extends React.Component {
                     <Form.Label style={styles.fontColor}>Username</Form.Label>
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="basic-addon1">
-                            <i class="fa-solid fa-user"></i>
+                            <i className="fa-solid fa-user"></i>
                         </InputGroup.Text>
                         <Form.Control placeholder="Input Your Username"/>
                     </InputGroup>
                     <Form.Label style={styles.fontColor}>E-mail</Form.Label>
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="basic-addon1">
-                            <i class="fa-solid fa-envelope"></i>
+                            <i className="fa-solid fa-envelope"></i>
                         </InputGroup.Text>
                         <Form.Control placeholder="Input Your E-mail"/>
                     </InputGroup>
                     <Form.Label style={styles.fontColor}>Password</Form.Label>
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="basic-addon1" onClick={() => this.setState({visibility: !visibility})}>
-                            {visibility ? <i class="fa-solid fa-eye"></i> : <i class="fa-solid fa-eye-slash"></i>}
+                            {visibility ? <i className="fa-solid fa-eye"></i> : <i className="fa-solid fa-eye-slash"></i>}
                         </InputGroup.Text>
                         <Form.Control 
                             type={visibility ? 'text' : 'password'} 
@@ -46,15 +48,18 @@ class RegisPage extends React.Component {
                     </InputGroup>
                     <Form.Label style={styles.fontColor}>Confirm Password</Form.Label>
                     <InputGroup className="mb-3">
-                        <InputGroup.Text id="basic-addon1" onClick={() => this.setState({visibility: !visibility})}>
-                            {visibility ? <i class="fa-solid fa-eye"></i> : <i class="fa-solid fa-eye-slash"></i>}
+                        <InputGroup.Text id="basic-addon1" onClick={() => this.setState({visibility2: !visibility2})}>
+                            {visibility2 ? <i className="fa-solid fa-eye"></i> : <i className="fa-solid fa-eye-slash"></i>}
                         </InputGroup.Text>
                         <Form.Control 
-                            type={visibility ? 'text' : 'password'} 
+                            type={visibility2 ? 'text' : 'password'} 
                             placeholder="Confirm Your Password"/>
                     </InputGroup>
                     <div style={styles.contButton}>
-                        <Button variant="warning">Register</Button>
+                        <Button variant="warning">
+                            <i style={{marginRight:'10px'}} class="fa-solid fa-file-arrow-up"></i>
+                            Register
+                        </Button>
                     </div>
                     <p style={styles.parRegislink}>Already have an account? <Link style={styles.regisLink} to='/login'>Login</Link></p>
                 </div>
@@ -72,7 +77,7 @@ const styles = {
         justifyContent: 'right'
     },
     contForm: {
-        width: '50vw',
+        width: '35vw',
         marginTop: '70px',
         marginRight: '5px',
         marginBottom: '5px',
