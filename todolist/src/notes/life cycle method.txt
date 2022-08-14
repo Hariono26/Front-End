@@ -1,7 +1,0 @@
-Life Cylcle Method
-
-1. render akan terpanggil pertama kali ketika component mount pertamakali
-2. render akan terpanggil pertama ketika ada perubahan STATE atau PROPS
-3. componentDidMount akan terpanggil hanya sekali setelah render terpanggil pertamakali
-4. componentDidUpdate akan terpanggil setiap kali ada perubahan state & props
-5. componentWillUnmount akan terpanggil setelah component di unmount
