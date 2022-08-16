@@ -1,18 +1,32 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "username": "admin",
-            "password": "admin123",
-            "email": "admin@gmail.com",
-            "role": "admin"
-        },
-        {
-            "id": 2,
-            "username": "penyok",
-            "password": "penyok123",
-            "email": "penyok@gmail.com",
-            "role": "user"
-        }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "username": "admin1",
+      "password": "admin11!",
+      "email": "admin@gmail.com",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "username": "penyok",
+      "password": "penyok1!",
+      "email": "penyok@gmail.com",
+      "role": "user"
+    },
+    {
+      "username": "mukidi",
+      "email": "mukidi@gmail.com",
+      "password": "mukidi1!",
+      "role": "user",
+      "id": 3
+    },
+    {
+      "username": "galino",
+      "email": "galino@gmail.com",
+      "password": "galino1!",
+      "role": "user",
+      "id": 4
+    }
+  ]
 }

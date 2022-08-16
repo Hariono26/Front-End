@@ -2,9 +2,6 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-// import component
-import NavigationBar from './component/navigationBar';
-
 //import pages
 import HomePage from './pages/home';
 import LoginPage from './pages/login';
@@ -21,7 +18,6 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <NavigationBar />
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/login' element={<LoginPage />} />

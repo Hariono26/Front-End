@@ -8,6 +8,7 @@ import {
 import { Link, Navigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { login, errLoginFalse } from '../redux/actions'
+import NavigationBar from '../component/navigationBar';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -43,6 +44,7 @@ class LoginPage extends React.Component {
 
         return (
             <div style={styles.cont}>
+                <NavigationBar />
                 <div style={styles.contForm}>
                     <h1 style={{ color: 'orange' }}>Hello,</h1>
                     <h3 style={{ color: 'orange' }} className='mb-4'>Welcome back !</h3>
