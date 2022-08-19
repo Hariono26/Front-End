@@ -208,21 +208,16 @@
       "username": "penyok",
       "password": "penyok1!",
       "email": "penyok@gmail.com",
-      "role": "user"
+      "role": "user",
+      "cart": []
     },
     {
       "username": "mukidi",
       "email": "mukidi@gmail.com",
       "password": "mukidi1!",
       "role": "user",
-      "id": 3
-    },
-    {
-      "username": "galino",
-      "email": "galino@gmail.com",
-      "password": "galino1!",
-      "role": "user",
-      "id": 4
+      "id": 3,
+      "cart": []
     }
   ]
 }

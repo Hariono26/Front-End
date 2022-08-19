@@ -6,6 +6,7 @@ import {
     Card,
     Button
 } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -28,16 +29,14 @@ class HomePage extends React.Component {
     }
 
     render() {
-        console.log(this.state.carousel)
-        console.log(this.state.products)
         return (
             <div>
                 <NavigationBar />
                 <div style={styles.container}>
                     <Carousel fade style={styles.carousel}>
-                        {this.state.carousel.map(item => {
+                        {this.state.carousel.map((item, index) => {
                             return (
-                                <Carousel.Item interval={3000}>
+                                <Carousel.Item key={index}>
                                     <img
                                         className="d-block"
                                         src={item.image}
@@ -54,20 +53,20 @@ class HomePage extends React.Component {
                     <div style={styles.sectProducts}>
                         <h1 style={styles.sectProductsTitle}>Produk Kami</h1>
                         <div style={styles.contProducts}>
-                            {this.state.products.map(item => {
+                            {this.state.products.map((item, index) => {
                                 return (
-                                    <Card style={{ width: '18rem', marginBottom: '20px', padding: '15px', backgroundColor: 'rgba(0, 0, 0, 0.7)', borderRadius: '10%' }}>
-                                        <Card.Img style={{ height: '30vh', borderRadius: '10%'}} variant="top" src={item.images[0]} />
+                                    <Card key={index} style={{ width: '18rem', marginBottom: '20px', padding: '15px', backgroundColor: 'rgba(0, 0, 0, 0.7)', borderRadius: '10%' }}>
+                                        <Card.Img style={{ height: '30vh', objectPosition: 'center', objectFit: 'cover', borderRadius: '10%'}} variant="top" src={item.images[0]} />
                                         <Card.Body style={{paddingBottom:'5px'}}>
                                             <Card.Title style={styles.cardTitle}>{item.name}</Card.Title>
                                             <Card.Text style={{ color: 'white' }}><strong>IDR. {item.price.toLocaleString()}</strong></Card.Text>
                                             <div style={styles.contButton}>
                                                 <Button variant="warning" style={{marginBottom:'10px'}}>
-                                                    <i class="fa-solid fa-check" style={{marginRight:'10px'}}></i>
+                                                    <i className="fa-solid fa-check" style={{marginRight:'10px'}}></i>
                                                     Tandai aja dulu
                                                 </Button>
-                                                <Button variant="success">
-                                                    <i class="fa-solid fa-cart-plus" style={{marginRight:'10px'}}></i>
+                                                <Button as={Link} to={`/detail?${item.id}`} variant="success">
+                                                    <i className="fa-solid fa-cart-plus" style={{marginRight:'10px'}}></i>
                                                     Beli
                                                 </Button>
                                             </div>
