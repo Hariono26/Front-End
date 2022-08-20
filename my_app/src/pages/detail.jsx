@@ -7,32 +7,14 @@ import {
 } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { Navigate } from 'react-router-dom'
-
-// import { useLocation, } from 'react-router-dom'
-// import { useEffect } from 'react'
-
-// const DetailPage = () => {
-//     const location = useLocation()
-
-//     useEffect(() => {
-//         Axios.get(`http://localhost:2000/products/${location.search.substring(1)}`)
-//         .then(res => {
-//             console.log(res.data)
-//         })
-//     }, [])
-
-//     return (
-//         <h1>This is Detail Page</h1>
-//     )
-// }
-
+import { addCart } from '../redux/actions'
 
 class DetailPage extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             product: {},
-            qty: 0,
+            qty: 1,
             toLogin: false,
         }
     }
@@ -52,10 +34,43 @@ class DetailPage extends React.Component {
         this.setState({ qty: this.state.qty - 1 })
     }
 
+    onInputClick = () => {
+        this.setState({ qty: '' })
+    }
+
+    onDelete = (e) => {
+        if (e.keyCode === 8) {
+            this.setState({ qty: '' })
+        }
+    }
+
+    onInput = (e) => {
+        this.setState({ qty: 1 })
+        let value = +e.target.value
+        if (value < 1) {
+            this.setState({ qty: 1 })
+        } else if (value > this.state.product.stock) {
+            this.setState({ qty: this.state.product.stock })
+        } else if (value >= 1 || value <= this.state.product.stock) {
+            this.setState({ qty: value })
+        }
+    }
+
     onMasukKeranjang = () => {
+        const { product, qty } = this.state
         if (!this.props.username) {
             return this.setState({ toLogin: true })
         }
+
+        //siapkan data yg mau dipush kedalam cart
+        let obj = {
+            id: product.id,
+            name: product.name,
+            image: product.images[0],
+            price: product.price,
+            qty
+        }
+        this.props.addCart(this.props.id, obj)
     }
 
     render() {
@@ -82,18 +97,22 @@ class DetailPage extends React.Component {
                             <p> <strong style={{ color: 'orange' }}>Harga:</strong> IDR. {(product.price ? product.price : '').toLocaleString()}</p>
                             <p> <strong style={{ color: 'orange' }}>Stok Tersedia:</strong> {product.stock ? product.stock : ''}</p>
                             <p> <strong style={{ color: 'orange' }}>Jumlah Pembelian:</strong></p>
-                            <div style={{ display: 'flex', justifyContent: "space-around", width: '30%' }}>
-                                <Button onClick={this.onMinus} variant='danger' style={{ marginRight: '10px' }} disabled={qty < 1 ? true : false}>-</Button>
+                            <div style={{ display: 'flex', justifyContent: "space-around", width: '100%' }}>
+                                <Button onClick={this.onMinus} style={{ flexBasis: '5%' }} variant='outline-danger' disabled={qty <= 1 ? true : false}>-</Button>
                                 <Form.Control
-                                    style={{ marginRight: '10px' }}
-                                    type="text"
+                                    style={{ marginRight: '10px', marginLeft: '10px', flexBasis:'10%' }}
                                     value={qty}
-                                    onChange={(e) => this.setState({ qty: +e.target.value })}
+                                    onClick={this.onInputClick}
+                                    onKeyDown={(e) => this.onDelete(e)}
+                                    onChange={(e) => this.onInput(e)}
                                 />
-                                <Button onClick={this.onPlus} variant='success' disabled={qty === product.stock ? true : false} >+</Button>
+                                <Button onClick={this.onPlus} variant='outline-success' style={{ flexBasis: '5%' }} disabled={qty >= product.stock ? true : false} >+</Button>
+                                <Form.Text className="text-danger" style={{marginTop:'10px', flexBasis: '80%', marginLeft:'20px' }}>
+                                    {qty === '' ? `Jumlah tidak boleh kosong (Min: 1, Max: ${product.stock})` : ''}
+                                </Form.Text>
                             </div>
-                            <Button style={{ marginTop: '25px', width: '30%' }} variant='warning' onClick={this.onMasukKeranjang}>
-                                <i className="fa-solid fa-cart-plus" style={{ marginRight: '10px' }}></i>
+                            <Button style={{ marginTop: '25px', width: '30%' }} disabled={qty === '' ? true : false} variant='warning' onClick={this.onMasukKeranjang}>
+                                <i className="fa-solid fa-cart-plus" style={{ marginRight: '10px' }} ></i>
                                 Masukkan Keranjang
                             </Button>
                         </div>
@@ -126,8 +145,9 @@ const styles = {
 
 const mapStateToProps = (state) => {
     return {
-        username: state.userReducer.username
+        username: state.userReducer.username,
+        id: state.userReducer.id
     }
 }
 
-export default connect(mapStateToProps)(DetailPage)
+export default connect(mapStateToProps, { addCart })(DetailPage)
