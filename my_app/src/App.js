@@ -7,6 +7,7 @@ import HomePage from './pages/home';
 import LoginPage from './pages/login';
 import RegisPage from './pages/register';
 import DetailPage from './pages/detail';
+import CartPage from './pages/cart';
 
 //import actions
 import { keepLogin } from './redux/actions'
@@ -24,6 +25,7 @@ class App extends React.Component {
           <Route path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegisPage />} />
           <Route path='/detail' element={<DetailPage />} />
+          <Route path='/cart' element={<CartPage />} />
         </Routes>
       </div>
     );

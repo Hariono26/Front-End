@@ -4,15 +4,39 @@ import {
     Navbar,
     Dropdown,
     Button,
-    Image
+    Image,
+    Badge
 } from 'react-bootstrap'
 import { LOGO } from '../assets'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../redux/actions'
+// import { Navigate } from 'react-router-dom'
 
 class NavigationBar extends React.Component {
+    // constructor(props) {
+    //     super(props)
+    //     this.state = {
+    //         toLogin: false,
+    //         toCart: false
+    //     }
+    // }
+
+    // onCart = () => {
+    //     if (this.props.username) {
+    //         this.setState({ toCart: true })
+    //     } else {
+    //         this.setState({ toLogin: true })
+    //     }
+    // }
+
     render() {
+        // if (this.state.toCart) {
+        //     return <Navigate to='/cart' />
+        // } else if (this.state.toLogin) {
+        //     return <Navigate to='/login' />
+        // }
+
         return (
             <Navbar fixed='top' className='px-5' style={styles.navbar} expand="lg">
                 <Navbar.Brand href="#home">
@@ -25,7 +49,12 @@ class NavigationBar extends React.Component {
                         <Nav.Link style={styles.navLink} href="#link">Product</Nav.Link>
                         <Nav.Link style={styles.navLink} href="#link">Contact Us</Nav.Link>
                     </Nav>
-                    <Button variant="outline-warning"><i className="fa-solid fa-cart-shopping"></i></Button>
+                    <Button variant="outline-warning" as={Link} to="/cart" >
+                        <i className="fa-solid fa-cart-shopping"></i>
+                        <Badge pill bg="warning" text="dark">
+                            {this.props.cart.length}
+                        </Badge>
+                    </Button>
                     <Dropdown style={{ marginLeft: '10px' }}>
                         <Dropdown.Toggle variant="warning" id="dropdown-basic">
                             {this.props.username ? this.props.username : "Username"}
@@ -65,7 +94,8 @@ const styles = {
 
 const mapStateToProps = (state) => {
     return {
-        username: state.userReducer.username
+        username: state.userReducer.username,
+        cart: state.userReducer.cart
     }
 }
 

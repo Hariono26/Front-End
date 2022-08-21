@@ -211,18 +211,12 @@
       "role": "user",
       "cart": [
         {
-          "id": 5,
-          "name": "Lumpia",
-          "image": "https://sweetrip.id/wp-content/uploads/2021/03/lumpia-semarang.png",
+          "id": 6,
+          "name": "Risoles",
+          "image": "https://asset.kompas.com/crops/_B42nVw4QW_8mK2CIIfOrdUjA8I=/205x17:858x453/780x390/data/photo/2021/07/13/60ed5b53cf277.jpg",
           "price": 4000,
-          "qty": 5
-        },
-        {
-          "id": 10,
-          "name": "Roti Zebra",
-          "image": "https://i0.wp.com/img-global.cpcdn.com/recipes/c39b60ebf53a90c8/1360x964cq70/bolu-zebra-tanpa-oven.jpg",
-          "price": 3000,
-          "qty": 9
+          "stock": 10,
+          "qty": 7
         }
       ]
     },
@@ -234,39 +228,12 @@
       "id": 3,
       "cart": [
         {
-          "id": 9,
-          "name": "Tahu isi",
-          "image": "https://img.okezone.com/content/2020/03/04/298/2178157/camilan-malam-resep-tahu-isi-kriuknya-nagih-GL1B2BcyiK.jpg",
-          "price": 3000,
-          "qty": 10
-        },
-        {
-          "id": 8,
-          "name": "Roti Goreng",
-          "image": "https://cdn1-production-images-kly.akamaized.net/Pvw-5vVVu_cH0cBU5yFJrVtTQvA=/469x625/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/3335577/original/048734500_1609213988-gabin_goreng.jpg",
+          "id": 6,
+          "name": "Risoles",
+          "image": "https://asset.kompas.com/crops/_B42nVw4QW_8mK2CIIfOrdUjA8I=/205x17:858x453/780x390/data/photo/2021/07/13/60ed5b53cf277.jpg",
           "price": 4000,
-          "qty": 5
-        },
-        {
-          "id": 8,
-          "name": "Roti Goreng",
-          "image": "https://cdn1-production-images-kly.akamaized.net/Pvw-5vVVu_cH0cBU5yFJrVtTQvA=/469x625/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/3335577/original/048734500_1609213988-gabin_goreng.jpg",
-          "price": 4000,
-          "qty": 10
-        },
-        {
-          "id": 10,
-          "name": "Roti Zebra",
-          "image": "https://i0.wp.com/img-global.cpcdn.com/recipes/c39b60ebf53a90c8/1360x964cq70/bolu-zebra-tanpa-oven.jpg",
-          "price": 3000,
-          "qty": 9
-        },
-        {
-          "id": 3,
-          "name": "Pastel",
-          "image": "https://cdn-2.tstatic.net/kaltim/foto/bank/images/resep-pastel-ayam.jpg",
-          "price": 4000,
-          "qty": 7
+          "stock": 10,
+          "qty": 1
         }
       ]
     }

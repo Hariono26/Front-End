@@ -68,6 +68,7 @@ class DetailPage extends React.Component {
             name: product.name,
             image: product.images[0],
             price: product.price,
+            stock: product.stock,
             qty
         }
         this.props.addCart(this.props.id, obj)
