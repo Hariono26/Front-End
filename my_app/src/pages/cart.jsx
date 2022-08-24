@@ -2,22 +2,29 @@ import React from 'react'
 import '../styling/cart.css'
 
 import { connect } from 'react-redux'
-import { Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+// import { Navigate } from 'react-router-dom'
 import NavigationBar from '../component/navigationBar'
 import {
     Table,
     Image,
     Button,
-    Form
+    Form,
+    Modal,
+    InputGroup
 } from 'react-bootstrap'
-import { delCart, saveCart } from '../redux/actions'
+import { delCart, saveCart, checkout } from '../redux/actions'
 
 class CartPage extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             indexEdit: null,
-            qty: null
+            qty: null,
+            askPass: false,
+            visibility: false,
+            errPass: false,
+            checkoutSucces: false
         }
     }
 
@@ -51,7 +58,7 @@ class CartPage extends React.Component {
                                 <td>{item.name}</td>
                                 <td>Rp. {item.price.toLocaleString()}/ pcs</td>
                                 <td width='15%'>
-                                    <div style={{ display: 'flex', justifyContent: "space-around", width: '100%', marginLeft:'auto', marginRight:'auto' }}>
+                                    <div style={{ display: 'flex', justifyContent: "space-around", width: '100%', marginLeft: 'auto', marginRight: 'auto' }}>
                                         <Button onClick={this.onMinus} style={{ flexBasis: '20%' }} disabled={this.state.qty <= 1 ? true : false} variant='outline-danger'>-</Button>
                                         <Form.Control
                                             style={{ marginRight: '10px', marginLeft: '10px', flexBasis: '30%' }}
@@ -65,7 +72,7 @@ class CartPage extends React.Component {
                                 </td>
                                 <td>Rp. {(item.qty * item.price).toLocaleString()}</td>
                                 <td>
-                                    <Button variant='danger' onClick={() => this.setState({indexEdit: null})}>Batal</Button>
+                                    <Button variant='danger' onClick={() => this.setState({ indexEdit: null })}>Batal</Button>
                                     <Button variant='success' disabled={this.state.qty === ''} onClick={() => this.onSave(index)}>Simpan</Button>
                                 </td>
                             </tr>
@@ -124,7 +131,7 @@ class CartPage extends React.Component {
         if (value < 1) {
             this.setState({ qty: 1 })
         } else if (value > max) {
-            this.setState({ qty: max})
+            this.setState({ qty: max })
         } else if (value >= 1 || value <= max) {
             this.setState({ qty: value })
         }
@@ -132,14 +139,35 @@ class CartPage extends React.Component {
 
     onSave = (index) => {
         this.props.saveCart(this.props.id, index, this.state.qty)
-        this.setState({indexEdit: null})
+        this.setState({ indexEdit: null })
+    }
+
+    onCheckOut = () => {
+        this.setState({ askPass: true })
+    }
+
+    onOKPass = () => {
+        // authorize user
+        if(this.refs.passwordUser.value !== this.props.password) {
+            return this.setState({errPass: true})
+        }
+        //siapkan data yg mau di push ke history
+        let dataHistory = {
+            idUser: this.props.id,
+            username: this.props.username,
+            time: new Date().toLocaleString(),
+            products: this.props.cart
+        }
+        this.setState({askPass: false, errPass: false, checkoutSucces: true})
+
+        this.props.checkout(this.props.id, dataHistory)
     }
 
     render() {
-        if (!this.props.username) {
-            return <Navigate to='/login' />
-        } 
-
+        // if (!this.props.username) {
+        //     return <Navigate to='/login' />
+        // } 
+        const { visibility, errPass, checkoutSucces } = this.state
         return (
             <div>
                 <NavigationBar />
@@ -148,6 +176,55 @@ class CartPage extends React.Component {
                         {this.showTableHead()}
                         {this.showTableBody()}
                     </Table>
+                    <Button onClick={this.onCheckOut} variant='success' size='lg' disabled={this.props.cart.length === 0 ? true : false}><strong>{this.props.cart.length === 0 ? 'Keranjang Anda masih kosong' : 'Beli Sekarang'}</strong></Button>
+                    <Button as={Link} to='/history' className='mt-3' variant='warning' size='lg'><strong>History</strong></Button>
+                    <Modal
+                        show={this.state.askPass}
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered
+                        onHide={() => this.setState({ askPass: false, errPass: false })}
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title style={{color: `${errPass ? 'red' : ''}`}} id="contained-modal-title-vcenter">
+                                {errPass ? 'Password Salah, Silahkan coba kembali !' : 'Silahkan Masukkan Password Anda'}
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <InputGroup style={{border: `${errPass ? 'red solid' : ''}`}} className="mb-3">
+                                <InputGroup.Text id="basic-addon1" onClick={() => this.setState({ visibility: !visibility })}>
+                                    {visibility ? <i className="fa-solid fa-eye"></i> : <i className="fa-solid fa-eye-slash"></i>}
+                                </InputGroup.Text>
+                                <Form.Control
+                                    ref='passwordUser'
+                                    type={visibility ? 'text' : 'password'}
+                                    placeholder="Masukkan Password Anda" />
+                                <Button onClick={this.onOKPass} variant="success" id="button-addon2">
+                                    OK
+                                </Button>
+                            </InputGroup>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant='danger' onClick={() => this.setState({ askPass: false, errPass: false })}>Batal</Button>
+                        </Modal.Footer>
+                    </Modal>
+                    <Modal
+                        show={checkoutSucces}
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered
+                        onHide={() => this.setState({ checkoutSucces: false })}
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title id="contained-modal-title-vcenter">
+                                Transaksi Berhasil
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <p>Silahkan klik HISTORY untuk melihat riwayat transaksi Anda</p>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant='warning' onClick={() => this.setState({ checkoutSucces: false })}>OK</Button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
             </div>
         )
@@ -158,8 +235,9 @@ const mapStateToProps = (state) => {
     return {
         username: state.userReducer.username,
         cart: state.userReducer.cart,
-        id: state.userReducer.id
+        id: state.userReducer.id,
+        password: state.userReducer.password
     }
 }
 
-export default connect(mapStateToProps, { delCart, saveCart })(CartPage)
+export default connect(mapStateToProps, { delCart, saveCart, checkout })(CartPage)

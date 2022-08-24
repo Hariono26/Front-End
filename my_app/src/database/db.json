@@ -209,16 +209,7 @@
       "password": "penyok1!",
       "email": "penyok@gmail.com",
       "role": "user",
-      "cart": [
-        {
-          "id": 6,
-          "name": "Risoles",
-          "image": "https://asset.kompas.com/crops/_B42nVw4QW_8mK2CIIfOrdUjA8I=/205x17:858x453/780x390/data/photo/2021/07/13/60ed5b53cf277.jpg",
-          "price": 4000,
-          "stock": 10,
-          "qty": 7
-        }
-      ]
+      "cart": []
     },
     {
       "username": "mukidi",
@@ -226,7 +217,79 @@
       "password": "mukidi1!",
       "role": "user",
       "id": 3,
-      "cart": [
+      "cart": []
+    }
+  ],
+  "history": [
+    {
+      "idUser": 2,
+      "username": "penyok",
+      "time": "8/24/2022, 4:05:48 PM",
+      "products": [
+        {
+          "id": 2,
+          "name": "Ote-Ote",
+          "image": "https://img.kurio.network/gFqGjoDNJ6h1YQ1M5Gwhd193y4I=/1200x900/filters:quality(80)/https://kurio-img.kurioapps.com/21/04/20/9a956e50-023f-4cb2-89c9-bedd4333e3fa.jpe",
+          "price": 2000,
+          "stock": 10,
+          "qty": 4
+        }
+      ],
+      "id": 1
+    },
+    {
+      "idUser": 2,
+      "username": "penyok",
+      "time": "8/24/2022, 4:09:11 PM",
+      "products": [
+        {
+          "id": 2,
+          "name": "Ote-Ote",
+          "image": "https://img.kurio.network/gFqGjoDNJ6h1YQ1M5Gwhd193y4I=/1200x900/filters:quality(80)/https://kurio-img.kurioapps.com/21/04/20/9a956e50-023f-4cb2-89c9-bedd4333e3fa.jpe",
+          "price": 2000,
+          "stock": 10,
+          "qty": 3
+        }
+      ],
+      "id": 2
+    },
+    {
+      "idUser": 2,
+      "username": "penyok",
+      "time": "8/24/2022, 4:41:21 PM",
+      "products": [
+        {
+          "id": 1,
+          "name": "Lemper",
+          "image": "https://asset.kompas.com/crops/lcF8iyNIubGqRCIYglpI-G1Qzmg=/0x292:1000x959/780x390/data/photo/2021/08/02/61081f8d3a20b.jpg",
+          "price": 4000,
+          "stock": 10,
+          "qty": 1
+        }
+      ],
+      "id": 3
+    },
+    {
+      "idUser": 2,
+      "username": "penyok",
+      "time": "8/24/2022, 4:42:33 PM",
+      "products": [
+        {
+          "id": 5,
+          "name": "Lumpia",
+          "image": "https://sweetrip.id/wp-content/uploads/2021/03/lumpia-semarang.png",
+          "price": 4000,
+          "stock": 12,
+          "qty": 1
+        }
+      ],
+      "id": 4
+    },
+    {
+      "idUser": 3,
+      "username": "mukidi",
+      "time": "8/24/2022, 5:03:09 PM",
+      "products": [
         {
           "id": 6,
           "name": "Risoles",
@@ -235,7 +298,72 @@
           "stock": 10,
           "qty": 1
         }
-      ]
+      ],
+      "id": 5
+    },
+    {
+      "idUser": 3,
+      "username": "mukidi",
+      "time": "8/24/2022, 5:07:15 PM",
+      "products": [
+        {
+          "id": 2,
+          "name": "Ote-Ote",
+          "image": "https://img.kurio.network/gFqGjoDNJ6h1YQ1M5Gwhd193y4I=/1200x900/filters:quality(80)/https://kurio-img.kurioapps.com/21/04/20/9a956e50-023f-4cb2-89c9-bedd4333e3fa.jpe",
+          "price": 2000,
+          "stock": 10,
+          "qty": 1
+        },
+        {
+          "id": 11,
+          "name": "Bolu Gulung",
+          "image": "https://img-global.cpcdn.com/recipes/a827065eb7df4865/1200x630cq70/photo.jpg",
+          "price": 4000,
+          "stock": 12,
+          "qty": 1
+        }
+      ],
+      "id": 6
+    },
+    {
+      "idUser": 3,
+      "username": "mukidi",
+      "time": "8/24/2022, 5:59:19 PM",
+      "products": [
+        {
+          "id": 6,
+          "name": "Risoles",
+          "image": "https://asset.kompas.com/crops/_B42nVw4QW_8mK2CIIfOrdUjA8I=/205x17:858x453/780x390/data/photo/2021/07/13/60ed5b53cf277.jpg",
+          "price": 4000,
+          "stock": 10,
+          "qty": 4
+        },
+        {
+          "id": 8,
+          "name": "Roti Goreng",
+          "image": "https://cdn1-production-images-kly.akamaized.net/Pvw-5vVVu_cH0cBU5yFJrVtTQvA=/469x625/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/3335577/original/048734500_1609213988-gabin_goreng.jpg",
+          "price": 4000,
+          "stock": 12,
+          "qty": 4
+        }
+      ],
+      "id": 7
+    },
+    {
+      "idUser": 3,
+      "username": "mukidi",
+      "time": "8/24/2022, 6:01:57 PM",
+      "products": [
+        {
+          "id": 12,
+          "name": "Iwel-Iwel",
+          "image": "https://cdn0-production-images-kly.akamaized.net/QFOvoIQ0STyJVAicuvDUCi8cPGk=/0x499:4592x3087/469x260/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/3567191/original/042122400_1631244932-shutterstock_2029190708.jpg",
+          "price": 3000,
+          "stock": 12,
+          "qty": 3
+        }
+      ],
+      "id": 8
     }
   ]
 }
