@@ -217,7 +217,24 @@
       "password": "mukidi1!",
       "role": "user",
       "id": 3,
-      "cart": []
+      "cart": [
+        {
+          "id": 1,
+          "name": "Lemper",
+          "image": "https://asset.kompas.com/crops/lcF8iyNIubGqRCIYglpI-G1Qzmg=/0x292:1000x959/780x390/data/photo/2021/08/02/61081f8d3a20b.jpg",
+          "price": 4000,
+          "stock": 10,
+          "qty": 6
+        },
+        {
+          "id": 2,
+          "name": "Ote-Ote",
+          "image": "https://img.kurio.network/gFqGjoDNJ6h1YQ1M5Gwhd193y4I=/1200x900/filters:quality(80)/https://kurio-img.kurioapps.com/21/04/20/9a956e50-023f-4cb2-89c9-bedd4333e3fa.jpe",
+          "price": 2000,
+          "stock": 10,
+          "qty": 3
+        }
+      ]
     }
   ],
   "history": [
@@ -364,6 +381,22 @@
         }
       ],
       "id": 8
+    },
+    {
+      "idUser": 3,
+      "username": "mukidi",
+      "time": "8/25/2022, 4:47:59 PM",
+      "products": [
+        {
+          "id": 9,
+          "name": "Tahu isi",
+          "image": "https://img.okezone.com/content/2020/03/04/298/2178157/camilan-malam-resep-tahu-isi-kriuknya-nagih-GL1B2BcyiK.jpg",
+          "price": 3000,
+          "stock": 12,
+          "qty": 4
+        }
+      ],
+      "id": 9
     }
   ]
 }

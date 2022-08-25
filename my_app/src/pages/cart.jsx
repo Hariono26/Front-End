@@ -3,7 +3,7 @@ import '../styling/cart.css'
 
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-// import { Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import NavigationBar from '../component/navigationBar'
 import {
     Table,
@@ -163,10 +163,11 @@ class CartPage extends React.Component {
         this.props.checkout(this.props.id, dataHistory)
     }
 
-    render() {
-        // if (!this.props.username) {
-        //     return <Navigate to='/login' />
-        // } 
+    render() { 
+        let idUserCheck = localStorage.getItem('idUser')
+        if(!idUserCheck) {
+            return <Navigate to='/login' />
+        }
         const { visibility, errPass, checkoutSucces } = this.state
         return (
             <div>

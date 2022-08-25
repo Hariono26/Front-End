@@ -2,6 +2,7 @@ import React from 'react'
 import NavigationBar from '../component/navigationBar'
 import '../styling/history.css'
 import Axios from 'axios'
+import { Navigate } from 'react-router-dom'
 import {
     Accordion,
     Table,
@@ -26,13 +27,18 @@ class HistoryPage extends React.Component {
     }
 
     render() {
+        let idUserCheck = localStorage.getItem('idUser')
+        if(!idUserCheck) {
+            return <Navigate to='/login' />
+        }
+        
         return (
             <div>
                 <NavigationBar />
                 <div className='pageCont'>
                     <h1 className='title'>Riwayat Transaksi</h1>
                     <Accordion>
-                        {this.state.history.map((item, index) => {
+                        {this.state.history.reverse().map((item, index) => {
                             return (
                                 <Accordion.Item key={index} eventKey={index}>
                                     <Accordion.Header>Tanggal : {item.time}</Accordion.Header>
