@@ -71,8 +71,8 @@ class CartPage extends React.Component {
                                     </div>
                                 </td>
                                 <td>Rp. {(item.qty * item.price).toLocaleString()}</td>
-                                <td>
-                                    <Button variant='danger' onClick={() => this.setState({ indexEdit: null })}>Batal</Button>
+                                <td width='15%'>
+                                    <Button variant='danger' className='me-3' onClick={() => this.setState({ indexEdit: null })}>Batal</Button>
                                     <Button variant='success' disabled={this.state.qty === ''} onClick={() => this.onSave(index)}>Simpan</Button>
                                 </td>
                             </tr>
@@ -88,8 +88,8 @@ class CartPage extends React.Component {
                             <td>Rp. {item.price.toLocaleString()}/ pcs</td>
                             <td width='15%'>{item.qty}</td>
                             <td>Rp. {(item.qty * item.price).toLocaleString()}</td>
-                            <td>
-                                <Button variant='danger' onClick={() => this.onDelete(index)}>Hapus</Button>
+                            <td width='15%'>
+                                <Button variant='danger' className='me-3' onClick={() => this.onDelete(index)}>Hapus</Button>
                                 <Button variant='secondary' onClick={() => this.onEdit(index)}>Edit</Button>
                             </td>
                         </tr>
@@ -177,7 +177,7 @@ class CartPage extends React.Component {
                         {this.showTableHead()}
                         {this.showTableBody()}
                     </Table>
-                    <Button onClick={this.onCheckOut} variant='success' size='lg' disabled={this.props.cart.length === 0 ? true : false}><strong>{this.props.cart.length === 0 ? 'Keranjang Anda masih kosong' : 'Beli Sekarang'}</strong></Button>
+                    <Button onClick={this.onCheckOut} variant={this.props.cart.length === 0 ? 'danger' : 'success'} size='lg' disabled={this.props.cart.length === 0 ? true : false}><strong>{this.props.cart.length === 0 ? 'Keranjang Anda masih kosong' : 'Beli Sekarang'}</strong></Button>
                     <Button as={Link} to='/history' className='mt-3' variant='warning' size='lg'><strong>History</strong></Button>
                     <Modal
                         show={this.state.askPass}

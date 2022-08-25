@@ -8,6 +8,7 @@
 }
 .table {
     text-align: center;
+    vertical-align:middle ;
 }
 .image {
     height: 10vh;

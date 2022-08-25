@@ -5,8 +5,14 @@ export const addCart = (id, data) => {
         Axios.get(`http://localhost:2000/users/${id}`)
             .then(res => {
                 let tempCart = res.data.cart
-                tempCart.push(data)
-
+                const itemIndex = tempCart.findIndex(
+                    (item) => item.name === data.name
+                )
+                if(itemIndex >= 0) {
+                    tempCart[itemIndex].qty += data.qty
+                } else {
+                    tempCart.push(data)
+                }
                 Axios.patch(`http://localhost:2000/users/${id}`, { cart: tempCart })
                     .then(res => {
                         Axios.get(`http://localhost:2000/users/${id}`)
