@@ -67,7 +67,7 @@ class LoginPage extends React.Component {
                     </InputGroup>
                     <div style={styles.contButton}>
                         <Button variant="warning" onClick={this.onLogin}>
-                            <i style={{marginRight: '10px'}} class="fa-solid fa-door-open"></i>
+                            <i style={{marginRight: '10px'}} className="fa-solid fa-door-open"></i>
                             Login
                         </Button>
                     </div>

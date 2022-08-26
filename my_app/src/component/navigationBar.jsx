@@ -49,12 +49,16 @@ class NavigationBar extends React.Component {
                         <Nav.Link style={styles.navLink} href="#link">Product</Nav.Link>
                         <Nav.Link style={styles.navLink} href="#link">Contact Us</Nav.Link>
                     </Nav>
-                    <Button variant="outline-warning" as={Link} to="/cart" >
-                        <i className="fa-solid fa-cart-shopping"></i>
-                        <Badge pill bg="warning" text="dark">
-                            {this.props.cart.length}
-                        </Badge>
-                    </Button>
+                    {this.props.role === 'user' ?
+                        <Button variant="outline-warning" as={Link} to="/cart" >
+                            <i className="fa-solid fa-cart-shopping"></i>
+                            <Badge pill bg="warning" text="dark">
+                                {this.props.cart.length}
+                            </Badge>
+                        </Button>
+                        :
+                        null
+                    }
                     <Dropdown style={{ marginLeft: '10px' }}>
                         <Dropdown.Toggle variant="warning" id="dropdown-basic">
                             {this.props.username ? this.props.username : "Username"}
@@ -63,7 +67,7 @@ class NavigationBar extends React.Component {
                         <Dropdown.Menu>
                             {this.props.username ?
                                 <>
-                                    <Dropdown.Item as={Link} to='/history'>History</Dropdown.Item>
+                                    <Dropdown.Item as={Link} to={this.props.role === 'admin' ? '/historyadmin' : '/history'}>History</Dropdown.Item>
                                     <Dropdown.Item onClick={this.props.logout}>Logout</Dropdown.Item>
                                 </>
                                 :
@@ -95,7 +99,8 @@ const styles = {
 const mapStateToProps = (state) => {
     return {
         username: state.userReducer.username,
-        cart: state.userReducer.cart
+        cart: state.userReducer.cart,
+        role: state.userReducer.role
     }
 }
 

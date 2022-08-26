@@ -101,21 +101,26 @@ class DetailPage extends React.Component {
                             <div style={{ display: 'flex', justifyContent: "space-around", width: '100%' }}>
                                 <Button onClick={this.onMinus} style={{ flexBasis: '5%' }} variant='outline-danger' disabled={qty <= 1 ? true : false}>-</Button>
                                 <Form.Control
-                                    style={{ marginRight: '10px', marginLeft: '10px', flexBasis:'10%' }}
+                                    style={{ marginRight: '10px', marginLeft: '10px', flexBasis: '10%' }}
                                     value={qty}
                                     onClick={this.onInputClick}
                                     onKeyDown={(e) => this.onDelete(e)}
                                     onChange={(e) => this.onInput(e)}
                                 />
                                 <Button onClick={this.onPlus} variant='outline-success' style={{ flexBasis: '5%' }} disabled={qty >= product.stock ? true : false} >+</Button>
-                                <Form.Text className="text-danger" style={{marginTop:'10px', flexBasis: '80%', marginLeft:'20px' }}>
+                                <Form.Text className="text-danger" style={{ marginTop: '10px', flexBasis: '80%', marginLeft: '20px' }}>
                                     {qty === '' ? `Jumlah tidak boleh kosong (Min: 1, Max: ${product.stock})` : ''}
                                 </Form.Text>
                             </div>
-                            <Button style={{ marginTop: '25px', width: '30%' }} disabled={qty === '' ? true : false} variant='warning' onClick={this.onMasukKeranjang}>
-                                <i className="fa-solid fa-cart-plus" style={{ marginRight: '10px' }} ></i>
-                                Masukkan Keranjang
-                            </Button>
+                            {this.props.role === 'user'
+                                ?
+                                <Button style={{ marginTop: '25px', width: '30%' }} disabled={qty === '' ? true : false} variant='warning' onClick={this.onMasukKeranjang}>
+                                    <i className="fa-solid fa-cart-plus" style={{ marginRight: '10px' }} ></i>
+                                    Masukkan Keranjang
+                                </Button>
+                                :
+                                null
+                            }
                         </div>
                     </div>
                 </div>
@@ -147,7 +152,8 @@ const styles = {
 const mapStateToProps = (state) => {
     return {
         username: state.userReducer.username,
-        id: state.userReducer.id
+        id: state.userReducer.id,
+        role: state.userReducer.role
     }
 }
 

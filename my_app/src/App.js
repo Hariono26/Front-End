@@ -9,6 +9,8 @@ import RegisPage from './pages/register';
 import DetailPage from './pages/detail';
 import CartPage from './pages/cart';
 import HistoryPage from './pages/history';
+import HistoryAdminPage from './pages/historyAdmin';
+import NotFoundPage from './pages/notFound';
 
 //import actions
 import { keepLogin } from './redux/actions'
@@ -19,20 +21,55 @@ class App extends React.Component {
     this.props.keepLogin(id)
   }
   render() {
+    if (this.props.role === 'admin') {
+      return (
+        <div>
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/register' element={<RegisPage />} />
+            <Route path='/detail' element={<DetailPage />} />
+            <Route path='/historyadmin' element={<HistoryAdminPage />} />
+            <Route path='*' element={<NotFoundPage />} />
+          </Routes>
+        </div>
+      )
+    } else if (this.props.role === 'user') {
+      return (
+        <div>
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/register' element={<RegisPage />} />
+            <Route path='/detail' element={<DetailPage />} />
+            <Route path='/cart' element={<CartPage />} />
+            <Route path='/history' element={<HistoryPage />} />
+            <Route path='*' element={<NotFoundPage />} />
+          </Routes>
+        </div>
+      )
+    }
     return (
       <div>
-        <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/register' element={<RegisPage />} />
-          <Route path='/detail' element={<DetailPage />} />
-          <Route path='/cart' element={<CartPage />} />
-          <Route path='/history' element={<HistoryPage />} />
-        </Routes>
-      </div>
-    );
-
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/register' element={<RegisPage />} />
+            <Route path='/detail' element={<DetailPage />} />
+            <Route path='/cart' element={<CartPage />} />
+            <Route path='/history' element={<HistoryPage />} />
+            <Route path='/historyadmin' element={<HistoryAdminPage />} />
+            <Route path='*' element={<NotFoundPage />} />
+          </Routes>
+        </div>
+    )
   }
 }
 
-export default connect(null, { keepLogin })(App);
+const mapStateToProps = (state) => {
+  return {
+    role: state.userReducer.role
+  }
+}
+
+export default connect(mapStateToProps, { keepLogin })(App);
